@@ -19,6 +19,12 @@ def special(request):
 
 
 @login_required
+def connect_four(request):
+    return render(request,'basic_app/ConnectFour.html')
+
+
+
+@login_required
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('index'))
