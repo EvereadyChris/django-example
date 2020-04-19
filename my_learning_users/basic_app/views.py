@@ -18,7 +18,6 @@ def special(request):
     return HttpResponse("Special page!!")
 
 
-@login_required
 def connect_four(request):
     return render(request,'basic_app/ConnectFour.html')
 

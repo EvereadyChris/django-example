@@ -1,9 +1,30 @@
 {% extends "basic_app/base.html" %}
+{% load static %}
+{% get_media_prefix as MEDIA_URL %}
 {% block body_block %}
 
-<div class="jumbotron">
-  <h1>Django Level Five</h1>
+{% if user.is_authenticated %}
+  <div class="jumbotron">
+    <h1>Welcome back</h1>
+    {% for entry in users %}
+      <li>User Info
+        <ul>
+          <li>First Name: {{ entry.first_name }}</li>
+          <li>Last Name: {{ entry.last_name }}</li>
+          <li>Email: {{ entry.email }}</li>
+        </ul>
+      </li>
+    {% endfor %}
 
-</div>
+    <!-- {% for photo in profile_pics %}
+      <img src="{{ MEDIA_URL }}{{ photo.profile_pic }}">
+    {% endfor %} -->
+  </div>
+{% else %}
+  <div class="jumbotron">
+    <h1>Welcome to Eveready Chris</h1>
+  </div>
 
-  {% endblock %}
+{% endif %}
+
+{% endblock %}

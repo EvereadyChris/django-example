@@ -1,7 +1,7 @@
 var player1 = prompt("Player one name? (You will be blue)")
 var player1Color = {
   'background-color': 'rgb(86, 151, 255)',
-  'background-image': 'url("willow.jpg")',
+  // 'background-image': 'url("willow.jpg")',
   'background-position': 'center',
   'background-size': 'contain'
 }
@@ -10,7 +10,7 @@ var player1Color = {
 var player2 = prompt("Player two name? (You will be red)")
 var player2Color = {
   'background-color': 'rgb(237, 45, 73)',
-  'background-image': 'url("bruce.jpg")',
+  // 'background-image': 'url("bruce.jpg")',
   'background-position': 'center',
   'background-size': 'contain'
 }
@@ -86,39 +86,43 @@ function diagWin() {
 
 
 function gameEnd(winner) {
-  $('h1').text(winner+' Wins, Refresh to start again.');
-  $('h2').fadeOut("fast");
-  $('h3').fadeOut("fast");
-
+  $('h1').text(winner+' Wins!');
+  $('h2').text("");
+  $('h3').text("");
 }
+
 
 var currentPlayer = 1;
 var currentName = player1;
 var currentColor = player1Color;
-
+var play = true;
 
 
 $('.board button').on('click',function() {
-  // var row = $(this).closest("tr").index();
-  var col = $(this).closest("td").index();
+    // var row = $(this).closest("tr").index();
+  if (play === true){
+    var col = $(this).closest("td").index();
 
-  changeColor(checkBottom(col),col,currentColor);
+    changeColor(checkBottom(col),col,currentColor);
 
-  if (winRow() || winCol() || diagWin()){
-    gameEnd(currentName);
+    if (winRow() || winCol() || diagWin()){
+      gameEnd(currentName);
+      play = false;
+    }
+
+    currentPlayer = currentPlayer * -1 ;
+
+    // Re-Check who the current Player is.
+    if (play === true){
+      if (currentPlayer === 1) {
+        currentName = player1;
+        $('h3').text(currentName+" : it is your turn, please pick a column to drop your blue chip.");
+        currentColor = player1Color;
+      }else {
+        currentName = player2
+        $('h3').text(currentName+" : it is your turn, please pick a column to drop your red chip.");
+        currentColor = player2Color;
+      }
+    }
   }
-
-  currentPlayer = currentPlayer * -1 ;
-
-  // Re-Check who the current Player is.
-  if (currentPlayer === 1) {
-    currentName = player1;
-    $('h3').text(currentName+": it is your turn, please pick a column to drop your blue chip.");
-    currentColor = player1Color;
-  }else {
-    currentName = player2
-    $('h3').text(currentName+": it is your turn, please pick a column to drop your red chip.");
-    currentColor = player2Color;
-  }
-
 })
